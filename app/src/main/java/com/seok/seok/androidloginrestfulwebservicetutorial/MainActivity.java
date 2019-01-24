@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        finish();
         btnLogin = findViewById(R.id.btnLogin);
         userId = findViewById(R.id.user_id);
         userPw = findViewById(R.id.user_pw);

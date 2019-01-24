@@ -1,5 +1,6 @@
 package com.seok.seok.androidloginrestfulwebservicetutorial;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +24,7 @@ import retrofit2.Response;
 
 public class Main3Activity extends AppCompatActivity {
     EditText editId;
+    EditText editPw;
     Button button;
     TextView goaltext;
 
@@ -33,21 +35,22 @@ public class Main3Activity extends AppCompatActivity {
         editId = findViewById(R.id.editid);
         button = findViewById(R.id.button);
         goaltext = findViewById(R.id.goaltext);
+        editPw = findViewById(R.id.editpw);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("textt = ", editId.getText().toString());
-                ApiUtils.loginUser().testLogin(editId.getText().toString()).enqueue(new Callback<List<TestLogin>>() {
+                ApiUtils.loginUser().testLogin(editId.getText().toString(), editPw.getText().toString()).enqueue(new Callback<List<TestLogin>>() {
                     @Override
                     public void onResponse(Call<List<TestLogin>> call, Response<List<TestLogin>> response) {
                         if (response.isSuccessful()) {
                             List<TestLogin> list = response.body();
-                            Log.d("test2 E : ", "성공");
                             try {
-                                goaltext.setText(list.get(0).getUserEmail());
+                                goaltext.setText("로그인 성공\n" + "ID : " + list.get(0).getUserId() + "\nPW : "+ list.get(0).getUserPw() + "\nEmail : " + list.get(0).getUserEmail());
                             }catch (Exception e){
-                                Toast.makeText(Main3Activity.this, "아이디 없음", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Main3Activity.this, "--로그인 실패--\n회원 가입창으로 넘어갑니다.", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(Main3Activity.this, Main4Activity.class));
                             }
                         }
                     }

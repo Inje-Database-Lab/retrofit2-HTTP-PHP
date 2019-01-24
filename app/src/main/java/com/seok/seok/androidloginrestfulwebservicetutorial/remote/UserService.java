@@ -21,5 +21,11 @@ public interface UserService {
     Call<List<TestObj>>getEmail();
 
     @POST("test_login.php")
-    Call<List<TestLogin>> testLogin(@Query("id") String id);
+    Call<List<TestLogin>> testLogin(@Query("id") String id,
+                                    @Query("pw") String pw);
+
+    @POST("test_register.php")
+    Call<List<TestLogin>> testRegister(@Query("id") String id,
+                                    @Query("pw") String pw,
+                                    @Query("email") String email);
 }
